@@ -187,7 +187,7 @@ def discover_trips_supporter(request):
                                                     first_name=user_.first_name,
                                                     last_name=user_.last_name,
                                                     profile_image='https://source.unsplash.com/user/erondu',
-                                                    gender=choice(['m', 'f'],
+                                                    gender=choice(['m', 'f']),
                                                     birth_date=generate_birthdate('supporter'),
                                                     lat=sup_lat,
                                                     lng=sup_lng,
