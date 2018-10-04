@@ -10,6 +10,10 @@ import os
 boto_key = os.environ.get("BOTO_PUB_KEY")
 boto_s_key = os.environ.get("BOTO_SECRET_KEY")
 
-@login_required
+# @login_required
 def index(request):
     return render(request, 'mobility/index.html')
+
+
+def cards(request):
+  return render(request, 'mobility/cards.html')
