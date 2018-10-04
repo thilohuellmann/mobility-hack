@@ -86,6 +86,10 @@ class Job(models.Model):
     status = models.CharField(max_length=255, choices=JOB_STATI, default='draft')
     job_type = models.CharField(max_length=255, choices=JOB_TYPES)
 
+    start_lat = models.FloatField(null=True)
+    start_lng = models.FloatField(null=True)
+    end_lat = models.FloatField(null=True)
+    end_lng = models.FloatField(null=True)
     start_time_type = models.CharField(max_length=255, choices=START_TIME_TYPES, null=True)
     date = models.DateField(null=True) # datetime.date.today()
     time = models.TimeField(null=True) # datetime.time
