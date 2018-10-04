@@ -10,7 +10,6 @@ import os
 boto_key = os.environ.get("BOTO_PUB_KEY")
 boto_s_key = os.environ.get("BOTO_SECRET_KEY")
 
-
 def index(request):
     return render(request, 'mobility/index.html')
 
