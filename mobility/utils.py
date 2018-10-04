@@ -1,4 +1,5 @@
 # Django imports
+import os
 from django.db import models
 from django.db.models import F
 from django.contrib.auth import get_user_model
@@ -22,4 +23,4 @@ def s3_upload(file, user_id, has_header, file_name):
     """Uploads a user's file to the user folder in S3"""
 
     k.key = '/datasets/user_{0}/{1}'.format(user_id, file_name)
-    k.set_contents_from_filename(file_name) # /from_file...
+    k.set_contents_from_filename(file_name)  # /from_file...
