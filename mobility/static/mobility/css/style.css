@@ -63,13 +63,13 @@
 #fixed-action-btn {
   border-radius: 50%;
 }
-
+/*
 .btn, .btn-large, .btn-small, .btn-flat {
   border-radius: .25rem;
   /* display: inline-flex !important; */
 }
 
-.btn, .btn-large, .btn-small {
+.btn, .btn-large, .btn-small, .btn-floating {
   background-color: #3498db;
 }
 
@@ -92,10 +92,14 @@
 
 main {
   height: 100%;
+  flex: 1 0 auto;
 }
 
 body {
   background: rgb(244, 246, 248);
+  display: flex;
+  min-height: 100vh;
+  flex-direction: column;
 }
 
 div.collapsible-body {
@@ -240,6 +244,7 @@ div.collapsible-body {
   text-decoration: underline;
 }
 
+<<<<<<< HEAD
 
 /* CARDS CSS */
 
@@ -350,4 +355,23 @@ div.collapsible-body {
 .card hr {
   border-width: 0.5px;
   color: rgba(0,0,0,0.5);
+}
+
+/* app navbar*/
+
+header {
+  color: white;
+  background-color: white;
+}
+
+nav {
+  background-color: white;
+}
+
+.btn-add {
+  padding-bottom: 10px;
+}
+
+.nav-wrapper {
+  background-color: rgba(190,190,190,0.5);
 }
