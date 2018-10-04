@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+
+{% load static %}
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-rc.2/css/materialize.min.css">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt" crossorigin="anonymous">
+  <link href="{% static 'mobility/css/style.css' %}" rel="stylesheet">
+
+
+  <!-- Favicons
+  <link rel="apple-touch-icon" href="{% static "mobility/img/mobility_icon.png" %}">
+  <link rel="icon" href="{% static "mobility/img/mobility_icon.png" %}">
+  -->
+
+  <title>mobility app</title>
+
+</head>
+
+<body>
+
+  <header>
+    <div class="top-gradient">
+    </div>
+    <div class="center">
+      <img src="" alt="Logo">
+    </div>
+  </header>
+
+
+  <main>
+    <div class="container">
+      {% block content %}
+      {% endblock %}
+    </div>
+  </main>
+
+  <nav>
+    <div class="nav-wrapper">
+
+    </div>
+  </nav>
+
+
+  <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-rc.2/js/materialize.min.js"></script>
+  <script src="{% static 'mobility/js/javascript.js' %}"></script>
+</html>
