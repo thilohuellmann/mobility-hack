@@ -3,7 +3,6 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django.conf import settings
 from django.views.decorators.csrf import csrf_exempt
-<<<<<<< HEAD
 from mobility.settings import *
 from mobility.models import User, Senior, Supporter, Job, Rating, Application
 from faker import Faker
