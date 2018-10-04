@@ -75,7 +75,7 @@ TIME_SLOTS = (
     ('morning', 'morning'),
     ('noon', 'noon'),
     ('afternoon', 'afternoon'),
-    ('evening', 'evening'),
+    ('evening', 'evening')
 )
 
 class Job(models.Model):
