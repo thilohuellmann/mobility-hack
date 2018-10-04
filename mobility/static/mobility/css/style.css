@@ -1,0 +1,239 @@
+.top-gradient {
+  height: 4px;
+  z-index: 999;
+  overflow: hidden;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  background: #3498db;
+}
+
+/* .messages {
+  width: 100%;
+  height: 40px;
+  background-color: #FF5E5B;
+  display: none;
+} */
+
+/* .plus-button {
+  color: white !important;
+  font-size: 1.0rem !important;
+}
+.processing-button {
+  color: red !important;
+  font-size: 1.0rem !important;
+} */
+
+
+/* [type="checkbox"].delete-checkbox:checked+span:not(.lever):after {
+  border: 2px solid #F44336 !important;
+  background-color: #F44336 !important;
+} */
+
+/* .check-wrapper {
+  text-align: center;
+  width: 86px;
+} */
+
+/* #progress-loader {
+  margin: 0;
+  height: 4px;
+  display: none;
+} */
+
+.mobility {
+  color: #3498db;
+  background-color: #3498db;
+}
+
+/* .card-panel, .collapsible {
+  border-radius: 6px;
+}
+
+.rounded-top {
+  border-radius: 6px 6px 0px 0px;
+}
+
+.rounded-bottom {
+  border-radius: 0px 0px 6px 6px;
+} */
+
+#fixed-action-btn {
+  border-radius: 50%;
+}
+
+.btn, .btn-large, .btn-small, .btn-flat {
+  border-radius: .25rem;
+  /* display: inline-flex !important; */
+}
+
+.btn, .btn-large, .btn-small {
+  background-color: #3498db;
+}
+
+.switch label input[type=checkbox]:checked+.lever {
+  background-color: #3498db;
+}
+
+.logo {
+  width: 250px;
+  height: auto;
+  padding-top: 20px;
+  padding-bottom: 15px;
+  padding-left: 10px;
+  padding-right: 10px;
+}
+
+.sidenav.sidenav-fixed {
+  top: 4px;
+}
+
+main {
+  height: 100%;
+}
+
+body {
+  background: rgb(244, 246, 248);
+}
+
+div.collapsible-body {
+  background: #fff;
+}
+
+.container {
+    width: 90%;
+}
+
+.container-60 {
+  width: 60%;
+}
+
+.card-panel {
+  text-align: right;
+}
+
+.progress-wrapper {
+  text-align: right;
+}
+
+.progress {
+  height: 5px;
+}
+
+.right {
+  width: 100%;
+  text-align: right;
+  float: right;
+}
+
+.icon-right {
+  float: right;
+  margin-left: 15px;
+}
+
+.fas, .far, .fab {
+  color: rgba(0,0,0,0.7);
+}
+
+/* label color */
+.input-field label {
+  color: rgb(60,60,59);
+}
+/* label focus color */
+.input-field input[type=text]:focus + label {
+  color: rgb(0,222,183);
+}
+/* label underline focus color */
+.input-field input[type=text]:focus {
+  border-bottom: 1px solid rgb(0,222,183);
+  box-shadow: 0 1px 0 0 rgb(0,222,183);
+}
+/* valid color */
+.input-field input[type=text].valid {
+  border-bottom: 1px solid rgb(0,222,183);
+  box-shadow: 0 1px 0 0 rgb(0,222,183);
+}
+/* invalid color */
+.input-field input[type=text].invalid {
+  border-bottom: 1px solid rgb(0,222,183);
+  box-shadow: 0 1px 0 0 rgb(0,222,183);
+}
+/* icon prefix focus color */
+.input-field .prefix.active {
+  color: rgb(0,222,183);
+}
+
+/* .active-menu-li {
+  background: rgb(0, 222, 183, 0.1);
+}
+
+.active-menu-li > a {
+  color: #3498db !important;
+}
+
+.active-menu-li > a > i{
+  color: #3498db !important;
+}
+
+.download-btn {
+  width: 80px;
+}
+
+.download-btn > i {
+  color: white;
+} */
+
+.small-modal {
+  width: 40% !important;
+}
+
+.modal {
+  border-radius: 6px;
+}
+
+.modal-header {
+  padding-top: 5px;
+  padding-bottom: 5px;
+  padding-left: 25px;
+  padding-right: 20px;
+  border-bottom: 1px solid #ddd;
+}
+
+.modal.modal-fixed-footer .modal-footer {
+    border-top: 0px solid rgba(0,0,0,0.1);
+}
+
+.modal-footer {
+  padding-right: 24px !important;
+}
+
+.modal-content {
+  padding-top: 10px !important;
+}
+
+/* #sidenav {
+  height: 100%;
+}
+
+#sidenav > #sidebar-footer {
+  padding: 5px 10px 15px 10px;
+  width: 100%;
+  position: absolute;
+  bottom: 0;
+  color: #555;
+  font-size: 12px;
+  border-top: 1px solid rgba(0,0,0,0.1);
+}
+
+#sidenav > #sidebar-footer > span > i {
+  color: #F44336;
+}
+
+#sidebar-footer a:link {
+  color: #3498db;
+} */
+
+.link {
+  color: rgb(0,222,183);
+  text-decoration: underline;
+}
