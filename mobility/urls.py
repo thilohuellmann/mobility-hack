@@ -13,7 +13,7 @@ urlpatterns = [
     path('senior/create_profile/', views.create_profile_senior, name='create_profile_senior'),
     path('senior/profile/', views.profile_senior, name='profile_senior'),
     path('senior/my_trips/', views.my_trips_senior, name='my_trips_senior'),
-    path('senior/trip/{id}/', views.trip_details_senior, name='trip_details_senior'), # ???
+    path('senior/trip/{id}/', views.trip_details_senior, name='trip_details_senior'), # ??? TODO
     path('senior/trip/create/step_1/', views.trip_create_1_senior, name='trip_create_1_senior'),
     path('senior/trip/create/step_2/', views.trip_create_2_senior, name='trip_create_2_senior'),
     path('senior/trip/create/step_3/', views.trip_create_3_senior, name='trip_create_3_senior'),
@@ -28,6 +28,6 @@ urlpatterns = [
     path('supporter/profile/', views.profile_supporter, name='profile_supporter'),
     path('supporter/discover/', views.discover_trips_supporter, name='discover_trips_supporter'),
     path('supporter/my_trips/', views.my_trips_supporter, name='my_trips_supporter'),
-    path('supporter/trip/{id}/', views.trip_details_supporter, name='trip_details_supporter'), # ???
+    path('supporter/trip/{id}/', views.trip_details_supporter, name='trip_details_supporter'), # ??? TODO
     path('supporter/trip/{id}/application_confirmation', views.trip_application_confirmation_supporter, name='trip_application_confirmation_supporter'), # HttpResponseRedirect
 ]
