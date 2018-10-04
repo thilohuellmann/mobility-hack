@@ -1,9 +1,73 @@
-{% extends 'mobility/layout.html' %}
+{% extends 'mobility/layout_supporter.html' %}
 
 {% block content %}
 
-<h2>Headline</h2>
+<h2>Profile</h2>
 
-<button class="btn">Test</button>
+<form method="POST" action="{% url 'profile_supporter_success' %}">
+  {% csrf_token %}
+
+  <div class="file-field input-field">
+    <div>
+      <span><i class="large material-icons" style="font-size: 50px;">add_a_photo</i></span>
+      {{ form.profile_image }}
+    </div>
+    <div class="file-path-wrapper">
+      <small><input class="file-path validate" type="text" placeholder="Add an image of yourself"></small>
+    </div>
+  </div>
+
+  <div class="input-field">
+    {{ form.first_name }}
+  </div>
+
+  <div class="input-field">
+    {{ form.last_name }}
+  </div>
+
+  <span>Gender: </span>
+    <p>
+      {% for choice in form.gender %}
+          <label>
+            {{ choice.tag }}
+            <span style="padding-right: 20px">{{ choice.choice_label }}</span>
+          </label>
+      {% endfor %}
+    </p>
+
+    <div class="input-field">
+      {{ form.birth_date }}
+    </div>
+
+    <div class="input-field">
+      {{ form.bio }}
+    </div>
+
+    <div class="input-field">
+      {{ form.phone }}
+    </div>
+
+    <span>Radius: </span>
+      <p>
+        {% for choice in form.radius %}
+            <label>
+              {{ choice.tag }}
+              <span style="padding-right: 20px">{{ choice.choice_label }}</span>
+            </label>
+        {% endfor %}
+      </p>
+
+      <div class="input-field">
+        {{ form.lat }}
+      </div>
+
+      <div class="input-field">
+        {{ form.lng }}
+      </div>
+
+      <input type="hidden" name="user_id" value="{{ user_id }}">
+
+      <button type="submit" class="btn" name="button">Save</button>
+</form>
 
 {% endblock %}

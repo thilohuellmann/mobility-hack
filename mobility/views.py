@@ -8,7 +8,7 @@ from mobility.models import User, Senior, Supporter, Job, Rating, Application
 from faker import Faker
 from random import choice, randint
 import datetime
-
+from mobility import forms
 from mobility import utils
 import os
 
@@ -93,7 +93,9 @@ def trip_creation_confirmation_senior(request):
 @login_required
 # @is_supporter
 def create_profile_supporter(request):
-    return render(request, 'mobility/create_profile_supporter.html', context={})
+    form = forms.SupporterProfileForm()
+    user_id = request.user.id
+    return render(request, 'mobility/create_profile_supporter.html', context={'form': form, 'user_id': user_id})
 
 @login_required
 # @is_supporter
@@ -198,3 +200,8 @@ def trip_details_supporter(request):
 # @is_supporter
 def trip_application_confirmation_supporter(request):
     return render(request, 'mobility/trip_application_confirmation_supporter.html', context={})
+
+@login_required
+# @is_supporter
+def profile_supporter_success(request):
+    return render(request, 'mobility/profile_supporter_success.html', context={})
