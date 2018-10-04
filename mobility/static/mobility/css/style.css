@@ -290,12 +290,11 @@ div.collapsible-body {
   margin-top: 5px;
 }
 .card-body {
-  /*padding-left: 10px;*/
   font-size: 13px;
   color: rgba(0,0,0,0.7);
 }
 .card-body {
-  padding-left: 24px;
+  padding-left: 19px;
   color: rgba(0,0,0,0.7);
   text-align: left;
   justify-content: center;
@@ -307,21 +306,36 @@ div.collapsible-body {
 }
 .card-body p {
   margin: 6px 0;
+  font-weight: light;
+  font-size: 95%;
 }
 .card-status {
   font-size: 10px;
   color: rgba(0,0,0,0.5);
 }
 
-.price {
+.job-status p{
   font-size: 16px;
-  color: rgba(0,0,0,1);
-  font-weight: bold;
+  margin-top: 5px !important;
+}
 
+.job-status.confirmed {
+  color: #A5FF0A;
+}
+
+.job-status.applied {
+  color: #E88A0C;
+}
+
+.job-status.applied {
+  color: #3498db;
 }
 
 .price p {
+  color: rgba(0,0,0,1);
   margin-top: 6px;
+  font-size: 14px;
+  font-weight: lighter;
 }
 
 .upper-card {
@@ -336,5 +350,4 @@ div.collapsible-body {
 .card hr {
   border-width: 0.5px;
   color: rgba(0,0,0,0.5);
-
 }
