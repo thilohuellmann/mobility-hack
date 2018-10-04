@@ -3,6 +3,11 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django.conf import settings
 from django.views.decorators.csrf import csrf_exempt
+from mobility.settings import *
+from mobility.models import User, Senior, Supporter, Job, Rating, Application
+from faker import Faker
+from random import choice, randint
+import datetime
 
 from mobility import utils
 import os
@@ -98,7 +103,86 @@ def profile_supporter(request):
 @login_required
 # @is_supporter
 def discover_trips_supporter(request):
-    return render(request, 'mobility/discover_trips_supporter.html', context={})
+
+    user = request.user.id
+
+    jobs = utils.get_trips_in_radius
+    N_users = 10
+
+
+    def generate_location():
+        lat = float('50.40{}72'.format(choice(list(range(99)))))
+        lng = float('7.61{}96'.format(choice(list(range(99)))))
+        return lat, lng
+
+    def generate_birthdate(kind='senior'):
+        if kind == 'senior':
+            year = choice(list(range(1928, 1945)))
+        else:
+            year = choice(list(range(1985, 2000)))
+        return datetime.date(year, 3, 13)
+
+    def generate_bio():
+        return choice(["Prone to fits of apathy. Creator. Beer fanatic. Lifelong tv lover. Certified food expert. Extreme zombie enthusiast.",
+                        "Lifelong bacon advocate. Unapologetic tv geek. Travel scholar. Friendly gamer. Wannabe writer. Web practitioner.",
+                        "Extreme coffee maven. Internet geek. Evil social media trailblazer. Travel nerd. Food aficionado.",
+                        "Certified analyst. Infuriatingly humble internet guru. Tv junkie. Coffee buff. Extreme social media practitioner.",
+                        "Hipster-friendly zombieaholic. Certified troublemaker. Thinker. Total introvert.",
+                        "Certified twitter aficionado. Infuriatingly humble internet trailblazer. Professional tv fanatic. Web geek.",
+                        "Web fanatic. Entrepreneur. Alcohol guru. Award-winning tv fanatic. Incurable reader. Food junkie. Music aficionado. Zombie lover. Hardcore travel expert."
+                        "Certified writer. Beer enthusiast. Total introvert. Proud organizer. Hipster-friendly thinker.",
+                        "Twitter buff. General pop culture practitioner. Award-winning coffee enthusiast. Bacon nerd. Infuriatingly humble problem solver.",
+                        "Travel fanatic. Incurable problem solver. Beer fan. Professional pop culture ninja. Hardcore web advocate. Total thinker. Freelance tv fanatic."])
+
+    def generate_phone():
+        return '+' + str(randint(111111111, 999999999))
+
+    f = Faker()
+
+    def generate_seed():
+      for _ in range(N_users):
+          user = User.objects.create(first_name=f.first_name(),
+                                     last_name=f.last_name(),
+                                     email=f.email())
+
+          profile = 0
+          sen_lat, sen_lng = generate_location()
+          senior = Senior.objects.create(user_id=user.id,
+                                         first_name=user.first_name,
+                                         last_name=user.last_name,
+                                         profile_image='https://source.unsplash.com/user/erondu',
+                                         birth_date=generate_birthdate('senior'),
+                                         lat=sen_lat,
+                                         lng=sen_lng,
+                                         bio=generate_bio(),
+                                         phone=generate_phone())
+          for __ in range(3):
+              job_lat, job_lng = generate_location()
+              job = Job.objects.create(senior_id=senior.user_id,
+                                       status=choice(['draft', 'pending',
+                                                      'confirmed', 'done',
+                                                      'expired']),
+                                      job_type=choice(['one_way', 'round_trip']),
+                                      start_lat=senior.lat,
+                                      start_lng=senior.lng,
+                                      end_lat=job_lat,
+                                      end_lng=job_lng,
+                                      start_time_type=choice(['fixed', 'flexibel']),
+                                      date=datetime.date(2018, 10, choice([5, 6, 7])),
+                                      # time=datetime.time(randint(12, 22), 00, 00),
+                                      time_slot=choice(['morning', 'noon', 'afternoon', 'evening']),
+                                      )
+
+    generate_seed()
+
+
+
+
+    context = {
+        "jobs": jobs
+    }
+
+    return render(request, 'mobility/discover_trips_supporter.html', context=context)
 
 @login_required
 # @is_supporter

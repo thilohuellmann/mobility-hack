@@ -2,8 +2,45 @@
 
 {% block content %}
 
-<h2>Headline</h2>
+{% if jobs_length > 1 %}
+  {% for trip in trips %}
+    <div class="card">
+      <div class="upper-card">
+        <div class="card-name">
+          <img class="avatar" src="https://randomuser.me/api/portraits/men/62.jpg">
+          <h3>Gab Dehan (67)</h3>
+          <p></p>
+        </div>
+        <div class="card-body">
+          <p><strong>Grocery shopping</strong></p>
+          <p>
+            9th October 2018
+          </p>
+          <p>4pm-6pm</p>
+        </div>
+        <div class="price">
+          <p>5 €</p>
+        </div>
+      </div>
+      <hr>
+      <div class="lower-card">
+        <div class="card-status">
+          <p class="">Avg. Rating: 4.9</p>
+        </div>
+        <div class="card-status">
+          <p class="">Distance: 2.5km</p>
+        </div>
+        <div>
+          <p class="card-status">Applications: 3</p>
+        </div>
+      </div>
+    </div>
+  {% endfor %}
+{% else %}
+  <h2>Sorry we couldn't find any possible trip.</h2>
+  <p>Please come back and help other people in a later point in time</p>
+{% endif %}
 
-<button class="btn">Test</button>
 
+<!--  -->
 {% endblock %}
