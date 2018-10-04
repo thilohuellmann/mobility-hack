@@ -3,12 +3,14 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django.conf import settings
 from django.views.decorators.csrf import csrf_exempt
+<<<<<<< HEAD
 from mobility.settings import *
 from mobility.models import User, Senior, Supporter, Job, Rating, Application
 from faker import Faker
 from random import choice, randint
 import datetime
 from mobility import forms
+from mobility import models
 from mobility import utils
 import os
 
@@ -47,12 +49,42 @@ def trip_details_senior(request):
 @login_required
 # @is_senior
 def trip_create_1_senior(request):
+
+    user_id = request.user.id
+    senior_id = 123 # models.Senior.objects.filter(user_id=user_id)[0]
+
+    if request.method == 'POST':
+        form = request.POST
+
+        job_type = form['job_type']
+
+        models.Job.objects.create(
+                    senior_id = senior_id,
+                    rated = False,
+                    status = 'draft',
+                    job_type = job_type,
+        )
+
+        return HttpResponseRedirect('/senior/trip/create/step_2')
+
     return render(request, 'mobility/trip_create_1_senior.html', context={})
 
 @login_required
 # @is_senior
 def trip_create_2_senior(request):
-    return render(request, 'mobility/trip_create_2_senior.html', context={})
+    #user_id = request.user.id
+    #senior_id = 123 # models.Senior.objects.filter(user_id=user_id)[0]
+
+    # get latest created job
+    #job_id = models.Job.objects.filter(senior_id=123).order_by('-created_at')[0]
+
+    start = 'no start'
+
+    if request.method == 'POST':
+        form = request.POST
+        start = form['start_lat'] + ',' + form['start_lng'] + ',' + form['end_lat'] + ',' + form['end_lng']
+
+    return render(request, 'mobility/trip_create_2_senior.html', context={'start': start})
 
 @login_required
 # @is_senior
