@@ -357,6 +357,7 @@ div.collapsible-body {
 
 .card hr {
   border-width: 0.5px;
+  text-decoration: none;
   color: rgba(0,0,0,0.5);
 }
 
@@ -384,4 +385,8 @@ nav {
 .card h1 {
   margin-top: 0px;
   margin-bottom: 2px;
+}
+
+a, a:hover, a:active, a:visited, a:focus {
+    text-decoration:none;
 }
