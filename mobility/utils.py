@@ -6,7 +6,7 @@ from django.db import models
 from django.db.models import F
 from django.contrib.auth import get_user_model
 import boto
-from .models import Job
+from .models import Job, Rating
 
 User = get_user_model()
 
@@ -54,5 +54,14 @@ def haversine(lng_1, lat_1, lng_2, lat_2):
     return c * r
 
 
+def average_rating(user):
+    ratings = Rating.objects.filter(user=user)
+    rating_sum = 0
+    try:
+        for it, r in enumerate(ratings):
+            rating_sum += r.rating
+    except Exception:
+        return 3.0 #FIXME
+    return rating_sum/(it+1)
 
 
