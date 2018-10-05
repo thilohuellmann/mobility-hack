@@ -2,8 +2,136 @@
 
 {% block content %}
 
-<h2>Headline</h2>
+<h2>Applied</h2>
 
-<button class="btn">Test</button>
+{% for trip in applied %}
+
+<div class="card">
+  <div class="upper-card">
+    <div class="card-name">
+      <img class="avatar" src="https://randomuser.me/api/portraits/men/62.jpg">
+      <h3>{{ trip.name }} ({{ trip.age }})</h3>
+      <p></p>
+    </div>
+    <div class="card-body">
+      <p><strong>Grocery shopping</strong></p>
+      <p>
+        {{ trip.date }}
+      </p>
+      <p>{{ trip.time }}</p>
+    </div>
+    <div class="card-right">
+      <div class="job-status applied">
+        <p>Applied</p>
+      </div>
+      <div class="price">
+        <p>{{ trip.reward }}</p>
+      </div>
+    </div>
+  </div>
+  <hr>
+  <div class="lower-card">
+    <div class="card-status">
+      <p class="">Avg. Rating: 4.9</p>
+    </div>
+    <div class="card-status">
+      <p class="">Distance: 2.5km</p>
+    </div>
+    <div>
+      <p class="card-status">Applications: 3</p>
+    </div>
+  </div>
+</div>
+
+
+{% endfor %}
+
+<h2>Confirmed</h2>
+
+{% for trip in confirmed %}
+
+<div class="card">
+  <div class="upper-card">
+    <div class="card-name">
+      <img class="avatar" src="https://randomuser.me/api/portraits/men/62.jpg">
+      <h3>{{ trip.name }} ({{ trip.age }})</h3>
+      <p></p>
+    </div>
+    <div class="card-body">
+      <p><strong>Grocery shopping</strong></p>
+      <p>
+        {{ trip.date }}
+      </p>
+      <p>{{ trip.time }}</p>
+    </div>
+    <div class="card-right">
+      <div class="job-status confirmed">
+        <p>Confirmed</p>
+      </div>
+      <div class="price">
+        <p>{{ trip.reward }}</p>
+      </div>
+    </div>
+  </div>
+  <hr>
+  <div class="lower-card">
+    <div class="card-status">
+      <p class="">Avg. Rating: 4.9</p>
+    </div>
+    <div class="card-status">
+      <p class="">Distance: 2.5km</p>
+    </div>
+    <div>
+      <p class="card-status">Applications: 3</p>
+    </div>
+  </div>
+</div>
+
+
+{% endfor %}
+
+
+<h2>Expired</h2>
+{% for trip in rejected %}
+
+<div class="card">
+  <div class="upper-card">
+    <div class="card-name">
+      <img class="avatar" src="https://randomuser.me/api/portraits/men/62.jpg">
+      <h3>{{ trip.name }} ({{ trip.age }})</h3>
+      <p></p>
+    </div>
+    <div class="card-body">
+      <p><strong>Grocery shopping</strong></p>
+      <p>
+        {{ trip.date }}
+      </p>
+      <p>{{ trip.time }}</p>
+    </div>
+    <div class="card-right">
+      <div class="job-status rejected">
+        <p>Expired</p>
+      </div>
+      <div class="price">
+        <p>{{ trip.reward }}</p>
+      </div>
+    </div>
+  </div>
+  <hr>
+  <div class="lower-card">
+    <div class="card-status">
+      <p class="">Avg. Rating: 4.9</p>
+    </div>
+    <div class="card-status">
+      <p class="">Distance: 2.5km</p>
+    </div>
+    <div>
+      <p class="card-status">Applications: 3</p>
+    </div>
+  </div>
+</div>
+
+
+{% endfor %}
 
 {% endblock %}

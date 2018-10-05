@@ -4,7 +4,6 @@ from django.contrib.auth.decorators import login_required
 from django.conf import settings
 from django.views.decorators.csrf import csrf_exempt
 from mobility.settings import *
-# from mobility.models import User, Senior, Supporter, Job, Rating, Application
 from mobility import models
 from faker import Faker
 from random import choice, randint
@@ -13,6 +12,8 @@ from mobility import forms
 from mobility import models
 from mobility import utils
 import os
+import itertools
+
 
 boto_key = os.environ.get("BOTO_PUB_KEY")
 boto_s_key = os.environ.get("BOTO_SECRET_KEY")
@@ -51,7 +52,6 @@ def trip_details_senior(request):
 def trip_create_1_senior(request):
 
     user_id = request.user.id
-    senior_id = 123 # models.Senior.objects.filter(user_id=user_id)[0]
 
     if request.method == 'POST':
         form = request.POST
@@ -73,7 +73,6 @@ def trip_create_1_senior(request):
 # @is_senior
 def trip_create_2_senior(request):
     #user_id = request.user.id
-    #senior_id = 123 # models.Senior.objects.filter(user_id=user_id)[0]
 
     # get latest created job
     #job_id = models.Job.objects.filter(senior_id=123).order_by('-created_at')[0]
@@ -141,27 +140,46 @@ def discover_trips_supporter(request):
     user = request.user.id
     trips = models.Job.objects.all()
 
-    card_dict = {}
+    cards_list = []
+
+    iterations = 20
+    i = 0
 
     for trip in trips:
-        card_dict[trip.id] = {}
-        trip_dict = card_dict[trip.id]
+        if i == iterations:
+            break
+        trip_dict = {}
+
+            #trip_dict = card_dict[trip.id]
         trip_dict["trip"] = trip.job_type
-        trip_dict["date"] = trip.date
+        if trip.date == None:
+            pass
+        else:
+            trip_dict["date"] = trip.date
         if trip.time != None:
             trip_dict["time"] = trip.time
+            trip_dict["reward"] = round(8.5*3,2)
+        elif trip.time_slot != None:
+            trip_dict["time"] = trip.time_slot
         else:
-            trip_dict["time_slot"] = trip.time_slot
+            pass
 
         trip_dict["senior_id"] = trip.senior_id
 
-        senior = models.Senior.objects.filter(id=trip.senior_id)[0]
+        try:
+            senior = models.Senior.objects.filter(id=trip.senior_id)[0]
+            trip_dict["name"] = "{0} {1}".format(senior.first_name, senior.last_name)
+            trip_dict["image_url"] = senior.profile_image
+            trip_dict["age"] = utils.get_age(senior.birth_date)
+        except IndexError:
+            continue
 
-        # trip_dict["name"] = user.first_name
-        # trip_dict["image_url"] = user.profile_image
+        cards_list.append(trip_dict)
+
+        i += 1
 
     context = {
-        "trips": card_dict
+        "trips": cards_list[:20]
     }
 
     return render(request, 'mobility/discover_trips_supporter.html', context=context)
@@ -169,7 +187,20 @@ def discover_trips_supporter(request):
 @login_required
 # @is_supporter
 def my_trips_supporter(request):
-    return render(request, 'mobility/my_trips_supporter.html', context={})
+
+    supporter_id = models.Supporter.objects.get(user_id=request.user.id).id
+
+    application_status_applied = utils.get_trip_list_by_status("applied", supporter_id)
+    confirmed_status_applied = utils.get_trip_list_by_status("confirmed", supporter_id)
+    rejected_status_applied = utils.get_trip_list_by_status("rejected", supporter_id)
+
+    context = {
+        "applied": application_status_applied,
+        "confirmed": confirmed_status_applied,
+        "rejected": rejected_status_applied,
+    }
+
+    return render(request, 'mobility/my_trips_supporter.html', context=context)
 
 @login_required
 # @is_supporter
