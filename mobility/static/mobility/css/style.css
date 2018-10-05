@@ -369,7 +369,11 @@ header {
   background-color: white;
 }
 
-nav {
+#topbar {
+  background-color: white;
+}
+
+#footer {
   background-color: white;
   overflow: hidden;
   position: fixed;
