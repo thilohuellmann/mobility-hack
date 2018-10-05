@@ -245,10 +245,7 @@ div.collapsible-body {
 }
 /* CARDS CSS */
 
-.avatar-card {
 
-
-}
 .card {
   /*display: flex;*/
   align-items: center;
@@ -257,6 +254,11 @@ div.collapsible-body {
   border-bottom: 1px solid rgba(220,224,244,0.4);
   max-width: 760px;
   align-items: flex-start;
+  transition: 0.2s ease;
+}
+
+.card:hover {
+  background-color: rgba(52, 152, 219,0.01);
 }
 .card:last-child {
   border-bottom: none;
@@ -375,4 +377,11 @@ nav {
 
 .nav-wrapper {
   background-color: rgba(190,190,190,0.5);
+}
+
+/* Overlapping avatars */
+
+.card h1 {
+  margin-top: 0px;
+  margin-bottom: 2px;
 }
