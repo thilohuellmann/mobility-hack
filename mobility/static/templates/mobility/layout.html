@@ -27,7 +27,13 @@
   <nav>
     <div class="nav-wrapper">
       <a href="#" class="brand-logo left">Logo</a>
-      <a href="{% url 'login' %}" class="brand-logo right"><button class="waves-effect waves-light btn">Log In</button></a>
+
+      {% if user_type == 'supporter' %}
+        <a href="/supporter/create_profile" class="brand-logo right"><button class="waves-effect waves-light btn">Log In</button></a>
+      {% else %}
+        <a href="/senior/my_trips" class="brand-logo right"><button class="waves-effect waves-light btn">Log In</button></a>
+      {% endif %}
+
     </div>
   </nav>
 

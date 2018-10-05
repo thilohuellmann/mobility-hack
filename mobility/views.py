@@ -37,7 +37,7 @@ def create_profile_senior(request):
 
     if request.method == 'POST':
         form = request.POST
-        Senior.objects.create(
+        models.Senior.objects.create(
             user_id = request.user.id,
             first_name = form['first_name'],
             last_name = form['last_name'],
@@ -58,7 +58,7 @@ def profile_senior(request):
 
     user_id = request.user.id
 
-    senior = Senior.objects.get(user_id=user_id)
+    senior = model.Senior.objects.get(user_id=user_id)
 
     return render(request, 'mobility/profile_senior.html', context={'senior': senior})
 
@@ -94,7 +94,12 @@ def trip_details_senior(request, id):
         supporter_id = query['supporter_id']
         applicants.append(models.Supporter.objects.filter(id=supporter_id)[0])
 
-    return render(request, 'mobility/trip_details_senior.html', context={'trip': trip, 'applicants': applicants})
+    context = {
+      'trip': trip,
+      'applicants': applicants
+    }
+
+    return render(request, 'mobility/trip_details_senior.html', context=context)
 
 @login_required
 # @is_senior
