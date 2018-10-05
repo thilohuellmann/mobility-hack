@@ -1,7 +1,6 @@
 # Django imports
 
-from math import sin, cos, sqrt, atan2, radians
-
+from math import sin, cos, sqrt, atan2, radians, asin
 import os
 from django.db import models
 from django.db.models import F
@@ -29,6 +28,30 @@ def s3_upload(file, user_id, has_header, file_name):
     k.key = '/datasets/user_{0}/{1}'.format(user_id, file_name)
     k.set_contents_from_filename(file_name)  # /from_file...
 
+
+def get_trips_in_radius(radius, supporter_lat=0, supporter_lng=0):
+    # get all jobs
+    try:
+        jobs = Job.objects.all()
+    except IndexError:
+        jobs = []
+
+    jobs_in_range = []
+    for j in jobs:
+        if haversine(j.lng, j.lat, supporter_lng, supporter_lat) <= radius:
+            jobs_in_range.append(j)
+    return jobs_in_range # list
+
+def haversine(lng_1, lat_1, lng_2, lat_2):
+
+    lng_1, lat_1, lng_2, lat_2 = map(radians, [lng_1, lat_1, lng_2, lat_2])
+
+    dlon = lng_2 - lng_1
+    dlat = lat_2 - lat_1
+    a = sin(dlat/2)**2 + cos(lat_1) * cos(lat_2) * sin(dlon/2)**2
+    c = 2 * asin(sqrt(a))
+    r = 6371
+    return c * r
 
 
 
