@@ -7,11 +7,7 @@ from django.db.models import F
 from django.contrib.auth import get_user_model
 from datetime import date
 import boto
-<<<<<<< HEAD
-from .models import Job, Rating
-=======
 from .models import Job, Application, Senior, Supporter
->>>>>>> jakob
 
 User = get_user_model()
 
