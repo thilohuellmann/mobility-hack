@@ -5,6 +5,7 @@ import os
 from django.db import models
 from django.db.models import F
 from django.contrib.auth import get_user_model
+from datetime import date
 import boto
 from .models import Job, Rating
 
@@ -65,6 +66,8 @@ def average_rating(user):
         return 3.0 #FIXME
     return rating_sum/(it+1)
 
-def birthdate_to_age():
-    pass
+
+def birthdate_to_age(born):
+    today = date.today()
+    return today.year - born.year - ((today.month, today.day) < (born.month, born.day))
 
