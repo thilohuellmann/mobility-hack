@@ -8,7 +8,7 @@
         <div class="upper-card">
           <div class="card-name">
             <img class="avatar-card" src="https://randomuser.me/api/portraits/men/62.jpg">
-            <h3>{{ trip.name }} ({{ trip.age }})</h3>
+            <h3>{{ trip.name }}</h3>
             <p></p>
           </div>
           <div class="card-body">
@@ -49,7 +49,7 @@
             <div class="upper-card">
               <div class="card-name">
                 <img class="avatar-card" src="https://randomuser.me/api/portraits/men/62.jpg">
-                <h3> {{ applicant.first_name }} ({{ applicant.age }})</h3>
+                <h3> {{ applicant.first_name }}</h3>
                 <p></p>
               </div>
               <div class="card-body">
@@ -77,11 +77,8 @@
             </div>
       </div>
     {% endfor %}
-
   {% else %}
-
     <p>No buddy applied yet</p>
-
   {% endif %}
 
 
