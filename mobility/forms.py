@@ -19,7 +19,7 @@ class SupporterProfileForm(forms.Form):
     first_name = forms.CharField(required=True, widget=forms.TextInput(attrs={'placeholder': 'First Name'}))
     last_name = forms.CharField(required=True, widget=forms.TextInput(attrs={'placeholder': 'Last Name'}))
     gender = forms.ChoiceField(required=True, choices=GENDERS, widget=forms.RadioSelect(attrs={'display': 'inline'}))
-    birth_date = forms.DateField(required=True, widget=forms.DateInput(attrs={'placeholder': 'Birth date'}))
+    birth_date = forms.DateField(required=True, widget=forms.TextInput(attrs={'placeholder': 'Birth date'}))
     bio = forms.CharField(widget=forms.Textarea(attrs={'placeholder': 'About yourself'}))
     phone = forms.CharField(required=True, widget=forms.TextInput(attrs={'placeholder': 'Phone number'}))
     radius = forms.ChoiceField(required=True, choices=RADII, widget=forms.RadioSelect(attrs={'display': 'inline'}))
