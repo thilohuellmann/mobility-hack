@@ -139,7 +139,7 @@ def discover_trips_supporter(request):
 
     user = request.user.id
 
-    jobs = utils.get_trips_in_radius
+    jobs = utils.get_trips_in_radius()
     N_users = 10
 
 
