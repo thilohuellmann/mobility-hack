@@ -4,6 +4,23 @@
 
 <h2>Trip summary</h2>
 
+<!-- job_type', 'start_loc', 'end_loc', 'start_time_type', 'date', 'time', 'time_slot -->
 
+<p>Type: {{ trip.job_type }}</p>
+<p>Start: {{ trip.start_loc }}</p>
+<p>Destination: {{ trip.end_loc }}</p>
+
+{% if trip.start_time_type == 'flexible' %}
+  <p>Date: {{ trip.date }}</p>
+  <p>Time slot: {{ trip.time_slot }}</p>
+{% else %}
+  <p>Date: {{ trip.date }}</p>
+  <p>Time: {{ trip.time }}</p>
+{% endif %}
+
+<form method="POST">
+{% csrf_token %}
+  <button type="submit" class="btn" name="">Submit trip</button>
+</form>
 
 {% endblock %}

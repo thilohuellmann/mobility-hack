@@ -86,6 +86,9 @@ class Job(models.Model):
     status = models.CharField(max_length=255, choices=JOB_STATI, default='draft')
     job_type = models.CharField(max_length=255, choices=JOB_TYPES)
 
+    start_loc = models.CharField(max_length=255, null=True) # for the client
+    end_loc = models.CharField(max_length=255, null=True) # for the client
+
     start_lat = models.FloatField(null=True)
     start_lng = models.FloatField(null=True)
     end_lat = models.FloatField(null=True)
