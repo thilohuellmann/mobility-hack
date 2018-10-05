@@ -4,7 +4,8 @@ from django.contrib.auth.decorators import login_required
 from django.conf import settings
 from django.views.decorators.csrf import csrf_exempt
 from mobility.settings import *
-from mobility.models import User, Senior, Supporter, Job, Rating, Application
+# from mobility.models import User, Senior, Supporter, Job, Rating, Application
+from mobility import models
 from faker import Faker
 from random import choice, randint
 import datetime
@@ -75,64 +76,127 @@ def trip_details_senior(request):
 def trip_create_1_senior(request):
 
     user_id = request.user.id
-    senior_id = 123 # models.Senior.objects.filter(user_id=user_id)[0]
+    senior_id = 123 # models.Senior.objects.filter(user_id=user_id)[0] TODO
 
     if request.method == 'POST':
         form = request.POST
 
         job_type = form['job_type']
 
-        models.Job.objects.create(
+        obj = models.Job.objects.create(
                     senior_id = senior_id,
                     rated = False,
                     status = 'draft',
                     job_type = job_type,
         )
 
-        return HttpResponseRedirect('/senior/trip/create/step_2')
+        id = obj.id
+
+        return HttpResponseRedirect('/senior/trip/create/step_2/' + str(id) )
 
     return render(request, 'mobility/trip_create_1_senior.html', context={})
 
 @login_required
 # @is_senior
-def trip_create_2_senior(request):
-    #user_id = request.user.id
-    #senior_id = 123 # models.Senior.objects.filter(user_id=user_id)[0]
-
-    # get latest created job
-    #job_id = models.Job.objects.filter(senior_id=123).order_by('-created_at')[0]
-
-    start = 'no start'
+def trip_create_2_senior(request, id):
 
     if request.method == 'POST':
-        form = request.POST
-        start = form['start_lat'] + ',' + form['start_lng'] + ',' + form['end_lat'] + ',' + form['end_lng']
 
-    return render(request, 'mobility/trip_create_2_senior.html', context={'start': start})
+        form = request.POST
+        start_lat = form['start_lat']
+        start_lng = form['start_lng']
+        end_lat = form['end_lat']
+        end_lng = form['end_lng']
+
+        # update latest job object
+        models.Job.objects.filter(id=id).update(
+                                start_lat = start_lat,
+                                start_lng = start_lng,
+                                end_lat = end_lat,
+                                end_lng = end_lng,
+        )
+
+        return HttpResponseRedirect('/senior/trip/create/step_3/' + str(id) )
+
+    return render(request, 'mobility/trip_create_2_senior.html', context={})
 
 @login_required
 # @is_senior
-def trip_create_3_senior(request):
+def trip_create_3_senior(request, id):
+
+    if request.method == 'POST':
+        form = request.POST
+
+        start_time_type = form['start_time_type']
+
+        # update job object
+        models.Job.objects.filter(id=id).update(start_time_type = start_time_type)
+
+        if start_time_type == 'flexible':
+            return HttpResponseRedirect('/senior/trip/create/step_4_2_1/' + str(id) )
+        else: # == fixed
+            return HttpResponseRedirect('/senior/trip/create/step_4_1/' + str(id) )
+
     return render(request, 'mobility/trip_create_3_senior.html', context={})
 
 @login_required
 # @is_senior
-def trip_create_4_1_senior(request):
+def trip_create_4_1_senior(request, id): # fixed
+    if request.method == 'POST':
+        form = request.POST
+
+        date = form['date']
+
+        dt_obj = datetime.datetime.strptime(date, '%b %d, %Y')
+        django_date_format = dt_obj.strftime('%Y-%m-%d')
+
+        # update job object
+        models.Job.objects.filter(id=id).update(date=django_date_format)
+
+        time = form['time']
+
+        # update job object
+        models.Job.objects.filter(id=id).update(time=time)
+
+        return HttpResponseRedirect('/senior/trip/create/step_5/' + str(id) )
+
     return render(request, 'mobility/trip_create_4_1_senior.html', context={})
 
 @login_required
 # @is_senior
-def trip_create_4_2_1_senior(request):
+def trip_create_4_2_1_senior(request, id): # flexible
+    if request.method == 'POST':
+        form = request.POST
+
+        date = form['date']
+
+        dt_obj = datetime.datetime.strptime(date, '%b %d, %Y')
+        django_date_format = dt_obj.strftime('%Y-%m-%d')
+
+        return HttpResponseRedirect('/senior/trip/create/step_4_2_2/' + str(id) )
+
+
     return render(request, 'mobility/trip_create_4_2_1_senior.html', context={})
 
 @login_required
 # @is_senior
-def trip_create_4_2_2_senior(request):
+def trip_create_4_2_2_senior(request, id):
+
+    if request.method == 'POST':
+        form = request.POST
+
+        return HttpResponseRedirect('/senior/trip/create/step_5/' + str(id) )
+
     return render(request, 'mobility/trip_create_4_2_2_senior.html', context={})
 
 @login_required
 # @is_senior
-def trip_create_5_senior(request):
+def trip_create_5_senior(request, id):
+
+    # show summary
+    # submit trip button
+    # changes status from draft to pending
+
     return render(request, 'mobility/trip_create_5_senior.html', context={})
 
 @login_required
@@ -189,20 +253,29 @@ def profile_supporter(request):
 def discover_trips_supporter(request):
 
     user = request.user.id
+    trips = models.Job.objects.all()
 
-    jobs = utils.get_trips_in_radius()
-    N_users = 10
+    card_dict = {}
 
-
-    def generate_location():
-        lat = float('50.40{}72'.format(choice(list(range(99)))))
-        lng = float('7.61{}96'.format(choice(list(range(99)))))
-        return lat, lng
-
-    def generate_birthdate(kind='senior'):
-        if kind == 'senior':
-            year = choice(list(range(1928, 1945)))
+    for trip in trips:
+        card_dict[trip.id] = {}
+        trip_dict = card_dict[trip.id]
+        trip_dict["trip"] = trip.job_type
+        trip_dict["date"] = trip.date
+        if trip.time != None:
+            trip_dict["time"] = trip.time
         else:
+            trip_dict["time_slot"] = trip.time_slot
+            trip_dict["senior_id"] = trip.senior_id
+
+            senior = models.Senior.objects.filter(id=trip.senior_id)[0]
+
+            # trip_dict["name"] = user.first_name
+            # trip_dict["image_url"] = user.profile_image
+
+            context = {
+            "trips": card_dict
+            }
             year = choice(list(range(1985, 2000)))
         return datetime.date(year, 3, 13)
 
@@ -224,79 +297,41 @@ def discover_trips_supporter(request):
     f = Faker()
 
     def generate_seed():
-        for _ in range(N_users):
-            user = User.objects.create(first_name=f.first_name(),
-                                       last_name=f.last_name(),
-                                       email=f.email())
+      for _ in range(N_users):
+          user = User.objects.create(first_name=f.first_name(),
+                                     last_name=f.last_name(),
+                                     email=f.email())
 
-            profile = 0
-            sen_lat, sen_lng = generate_location()
-            senior = Senior.objects.create(user_id=user.id,
-                                            first_name=user.first_name,
-                                            last_name=user.last_name,
-                                            profile_image='https://source.unsplash.com/user/erondu',
-                                            birth_date=generate_birthdate('senior'),
-                                            lat=sen_lat,
-                                            lng=sen_lng,
-                                            bio=generate_bio(),
-                                            phone=generate_phone())
-            # Ratings for seniors
-            for x_ in range(randind(10, 20)):
-                rating = Rating.objects.create(user_id=user.user_id,
-                                            rating=randint(3, 5))
-            for __ in range(3):
-                job_lat, job_lng = generate_location()
-                job = Job.objects.create(senior_id=senior.user_id,
-                                        status=choice(['draft', 'pending',
-                                                        'confirmed', 'done',
-                                                        'expired']),
-                                        job_type=choice(['one_way', 'round_trip']),
-                                        start_lat=senior.lat,
-                                        start_lng=senior.lng,
-                                        end_lat=job_lat,
-                                        end_lng=job_lng,
-                                        start_time_type=choice(['fixed', 'flexibel']),
-                                        date=datetime.date(2018, 10, choice([5, 6, 7])),
-                                        # time=datetime.time(randint(12, 22), 00, 00),
-                                        time_slot=choice(['morning', 'noon', 'afternoon', 'evening']),
-                                        )
-                for ___ in range(randint(1, 3)):
-                    user_ = User.objects.create(first_name=f.first_name(),
-                                                last_name=f.last_name(),
-                                                email=f.email())
-                    sup_lat, sup_lng = generate_location()
-                    supp = Supporter.objects.create(user_id=user_.user_id,
-                                                    first_name=user_.first_name,
-                                                    last_name=user_.last_name,
-                                                    profile_image='https://source.unsplash.com/user/erondu',
-                                                    gender=choice(['m', 'f']),
-                                                    birth_date=generate_birthdate('supporter'),
-                                                    lat=sup_lat,
-                                                    lng=sup_lng,
-                                                    bio=generate_bio(),
-                                                    phone=generate_phone(),
-                                                    radius=choice([1, 2, 5, 10]))
-                    # Ratings for supporters
-                    for x in range(randint(10, 20)):
-                        rating_ = Rating.objects.create(user_id=user_.user_id,
-                                                        rating=randint(3, 5))
-                    app = Application.objects.create(job_id=job.id,
-                                                     supporter_id=supp.user_id,
-                                                     senior_id=senior.user_id,
-                                                     application_status=choice(['applied', 'confirmed', 'rejected']))
-
-
-
-
+          profile = 0
+          sen_lat, sen_lng = generate_location()
+          senior = Senior.objects.create(user_id=user.id,
+                                         first_name=user.first_name,
+                                         last_name=user.last_name,
+                                         profile_image='https://source.unsplash.com/user/erondu',
+                                         birth_date=generate_birthdate('senior'),
+                                         lat=sen_lat,
+                                         lng=sen_lng,
+                                         bio=generate_bio(),
+                                         phone=generate_phone())
+          for __ in range(3):
+              job_lat, job_lng = generate_location()
+              job = Job.objects.create(senior_id=senior.user_id,
+                                       status=choice(['draft', 'pending',
+                                                      'confirmed', 'done',
+                                                      'expired']),
+                                      job_type=choice(['one_way', 'round_trip']),
+                                      start_lat=senior.lat,
+                                      start_lng=senior.lng,
+                                      end_lat=job_lat,
+                                      end_lng=job_lng,
+                                      start_time_type=choice(['fixed', 'flexible']),
+                                      date=datetime.date(2018, 10, choice([5, 6, 7])),
+                                      # time=datetime.time(randint(12, 22), 00, 00),
+                                      time_slot=choice(['morning', 'noon', 'afternoon', 'evening']),
+                                      )
 
     generate_seed()
 
-
-
-
-    context = {
-        "jobs": jobs
-    }
 
     return render(request, 'mobility/discover_trips_supporter.html', context=context)
 
@@ -307,12 +342,12 @@ def my_trips_supporter(request):
 
 @login_required
 # @is_supporter
-def trip_details_supporter(request):
+def trip_details_supporter(request, id):
     return render(request, 'mobility/trip_details_supporter.html', context={})
 
 @login_required
 # @is_supporter
-def trip_application_confirmation_supporter(request):
+def trip_application_confirmation_supporter(request, id):
     return render(request, 'mobility/trip_application_confirmation_supporter.html', context={})
 
 @login_required

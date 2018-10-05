@@ -2,8 +2,41 @@
 
 {% block content %}
 
-<h2>Headline</h2>
+<h2>Suitable time slots</h2>
 
-<button class="btn">Test</button>
+<form method="POST">
+{% csrf_token %}
+<p>
+  <label>
+    <input type="checkbox" />
+    <span>Red</span>
+  </label>
+</p>
+
+<p>
+  <label>
+    <input type="checkbox" />
+    <span>Red</span>
+  </label>
+</p>
+
+<p>
+  <label>
+    <input type="checkbox" />
+    <span>Red</span>
+  </label>
+</p>
+
+<p>
+  <label>
+    <input type="checkbox" />
+    <span>Red</span>
+  </label>
+</p>
+
+<button type="submit" class="btn" name="">confirm</button>
+
+</form>
+
 
 {% endblock %}

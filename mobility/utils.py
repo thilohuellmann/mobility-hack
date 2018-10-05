@@ -28,6 +28,7 @@ def s3_upload(file, user_id, has_header, file_name):
     k.key = '/datasets/user_{0}/{1}'.format(user_id, file_name)
     k.set_contents_from_filename(file_name)  # /from_file...
 
+
 def get_trips_in_radius(radius, supporter_lat=0, supporter_lng=0):
     # get all jobs
     try:
