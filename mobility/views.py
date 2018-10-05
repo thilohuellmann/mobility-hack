@@ -94,7 +94,12 @@ def trip_details_senior(request, id):
         supporter_id = query['supporter_id']
         applicants.append(models.Supporter.objects.filter(id=supporter_id)[0])
 
-    return render(request, 'mobility/trip_details_senior.html', context={'trip': trip, 'applicants': applicants})
+    context = {
+      'trip': trip,
+      'applicants': applicants
+    }
+
+    return render(request, 'mobility/trip_details_senior.html', context=context)
 
 @login_required
 # @is_senior
