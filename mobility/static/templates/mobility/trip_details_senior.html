@@ -18,8 +18,16 @@
   <p>Time: {{ trip.time }}</p>
 {% endif %}
 
-{% for applicant in applicants %}
-  {{ applicant.first_name }}
-{% endfor %}
+<h4>Applications:</h4>
+{% if applicants %}
+
+  {% for applicant in applicants %}
+    {{ applicant.first_name }}
+  {% endfor %}
+
+{% else %}
+  <span>No buddy applied yet</span>
+{% endif %}
+
 
 {% endblock %}

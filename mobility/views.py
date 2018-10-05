@@ -11,8 +11,6 @@ import datetime
 from mobility import forms
 from mobility import utils
 from .forms import SupporterProfileForm
-from .models import Supporter
-from mobility import models
 import os
 import itertools
 
@@ -37,7 +35,7 @@ def create_profile_senior(request):
 
     if request.method == 'POST':
         form = request.POST
-        Senior.objects.create(
+        models.Senior.objects.create(
             user_id = request.user.id,
             first_name = form['first_name'],
             last_name = form['last_name'],
@@ -58,7 +56,7 @@ def profile_senior(request):
 
     user_id = request.user.id
 
-    senior = Senior.objects.get(user_id=user_id)
+    senior = models.Senior.objects.get(user_id=user_id)
 
     return render(request, 'mobility/profile_senior.html', context={'senior': senior})
 
