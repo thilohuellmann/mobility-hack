@@ -2,8 +2,38 @@
 
 {% block content %}
 
-<h1>Index</h1>
+<div class="col s12 m7">
+    <h4 class="header">I need help</h4>
+    <div class="card horizontal">
+      <div class="card-image">
+        <img src="https://imgix.ranker.com/user_node_img/50046/1000901495/original/this-is-harold-and-he-hides-his-pain-with-his-smiles-photo-u1?w=650&q=50&fm=jpg&fit=crop&crop=faces">
+      </div>
+      <div class="card-stacked">
+        <div class="card-content">
+          <p>I am a very simple card. I am good at containing small bits of information.</p>
+        </div>
+        <div class="card-action">
+          <a href="{% url 'senior_signup' %}">Sign up</a>
+        </div>
+      </div>
+    </div>
+  </div>
 
-<button class="btn">Test</button>
+  <div class="col s12 m7">
+    <h4 class="header">I want to help</h4>
+    <div class="card horizontal">
+      <div class="card-image">
+        <img src="https://lorempixel.com/100/190/nature/6">
+      </div>
+      <div class="card-stacked">
+        <div class="card-content">
+          <p>I am a very simple card. I am good at containing small bits of information.</p>
+        </div>
+        <div class="card-action">
+          <a href="{% url 'supporter_signup' %}">Sign up</a>
+        </div>
+      </div>
+    </div>
+  </div>
 
 {% endblock %}
