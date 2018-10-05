@@ -51,7 +51,7 @@ def trip_details_senior(request):
 def trip_create_1_senior(request):
 
     user_id = request.user.id
-    senior_id = 123 # models.Senior.objects.filter(user_id=user_id)[0] TODO
+    senior_id = models.Senior.objects.filter(user_id=user_id)[0].id
 
     if request.method == 'POST':
         form = request.POST
@@ -78,6 +78,10 @@ def trip_create_2_senior(request, id):
     if request.method == 'POST':
 
         form = request.POST
+
+        start_loc = form['start_location']
+        end_loc = form['end_location']
+
         start_lat = form['start_lat']
         start_lng = form['start_lng']
         end_lat = form['end_lat']
@@ -85,6 +89,8 @@ def trip_create_2_senior(request, id):
 
         # update latest job object
         models.Job.objects.filter(id=id).update(
+                                start_loc = start_loc,
+                                end_loc = end_loc,
                                 start_lat = start_lat,
                                 start_lng = start_lng,
                                 end_lat = end_lat,
@@ -148,6 +154,8 @@ def trip_create_4_2_1_senior(request, id): # flexible
         dt_obj = datetime.datetime.strptime(date, '%b %d, %Y')
         django_date_format = dt_obj.strftime('%Y-%m-%d')
 
+        models.Job.objects.filter(id=id).update(date=django_date_format)
+
         return HttpResponseRedirect('/senior/trip/create/step_4_2_2/' + str(id) )
 
 
@@ -155,10 +163,14 @@ def trip_create_4_2_1_senior(request, id): # flexible
 
 @login_required
 # @is_senior
-def trip_create_4_2_2_senior(request, id):
+def trip_create_4_2_2_senior(request, id): # time slot preference
 
     if request.method == 'POST':
         form = request.POST
+
+        time_slot = form['time_slot']
+
+        models.Job.objects.filter(id=id).update(time_slot=time_slot)
 
         return HttpResponseRedirect('/senior/trip/create/step_5/' + str(id) )
 
@@ -168,15 +180,19 @@ def trip_create_4_2_2_senior(request, id):
 # @is_senior
 def trip_create_5_senior(request, id):
 
-    # show summary
-    # submit trip button
-    # changes status from draft to pending
+    trip = models.Job.objects.filter(id=id).values('job_type', 'start_loc', 'end_loc', 'start_time_type', 'date', 'time', 'time_slot')[0]
 
-    return render(request, 'mobility/trip_create_5_senior.html', context={})
+    # changes status from draft to pending
+    if request.method == 'POST':
+        models.Job.objects.filter(id=id).update(status='pending')
+
+        return HttpResponseRedirect('/senior/creation_confirmation/' + str(id) )
+
+    return render(request, 'mobility/trip_create_5_senior.html', context={'trip': trip})
 
 @login_required
 # @is_senior
-def trip_creation_confirmation_senior(request):
+def trip_creation_confirmation_senior(request, id):
     return render(request, 'mobility/trip_creation_confirmation_senior.html', context={})
 
 # # # # # # # # # # # # # # #
