@@ -29,7 +29,7 @@ def index(request):
     except:
         user_type = 'supporter'
 
-    return render(request, 'mobility/index.html')
+    return render(request, 'mobility/index.html', context={'user_type': user_type})
 
 # # # # # # # # # # # # # # #
 #                           #
