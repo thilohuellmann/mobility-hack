@@ -36,11 +36,12 @@ def get_trips_in_radius(radius, supporter_lat=0, supporter_lng=0):
     except IndexError:
         jobs = []
 
-    jobs_in_range = []
+    jobs_in_range = {}
     for j in jobs:
-        if haversine(j.lng, j.lat, supporter_lng, supporter_lat) <= radius:
-            jobs_in_range.append(j)
-    return jobs_in_range # list
+        dist = haversine(j.lng, j.lat, supporter_lng, supporter_lat)
+        if  dist <= radius:
+            jobs_in_range[j.id] = dist
+    return jobs_in_range
 
 def haversine(lng_1, lat_1, lng_2, lat_2):
 
@@ -64,4 +65,6 @@ def average_rating(user):
         return 3.0 #FIXME
     return rating_sum/(it+1)
 
+def birthdate_to_age():
+    pass
 
