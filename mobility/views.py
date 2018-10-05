@@ -56,7 +56,7 @@ def profile_senior(request):
 
     user_id = request.user.id
 
-    senior = models.Senior.objects.get(user_id=user_id)
+    senior = model.Senior.objects.get(user_id=user_id)
 
     return render(request, 'mobility/profile_senior.html', context={'senior': senior})
 
