@@ -12,6 +12,7 @@ urlpatterns = [
     # senior specific paths begin
     path('senior/create_profile/', views.create_profile_senior, name='create_profile_senior'),
     path('senior/profile/', views.profile_senior, name='profile_senior'),
+    path('senior/profile/success', views.profile_senior_success, name='profile_senior_success'),
     path('senior/my_trips/', views.my_trips_senior, name='my_trips_senior'),
     path('senior/trip/{id}/', views.trip_details_senior, name='trip_details_senior'), # ??? TODO
     path('senior/trip/create/step_1/', views.trip_create_1_senior, name='trip_create_1_senior'),

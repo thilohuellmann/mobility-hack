@@ -2,8 +2,37 @@
 
 {% block content %}
 
-<h2>Headline</h2>
+<div class="center">
+  <h2>Profile</h2>
+</div>
 
-<button class="btn">Test</button>
+<div class="center">
+  <i class="large material-icons">account_circle</i>
+</div>
+
+<div class="center">
+  <h4>{{ supporter.first_name }} {{ supporter.last_name }}</h4>
+</div>
+
+<div class="container">
+
+<div class="">
+  <h5>Gender: {% if supporter.gender == 'f' %}Female{% elif supporter.gender == 'm' %}Male{% elif supporter.gender == 'd' %}Diverse{% endif %}</h5>
+</div>
+
+<div class="">
+  <h5>Birthday: {{ supporter.birth_date }}</h5>
+</div>
+
+<div class="">
+  <h5>About yourself:</h5>
+  <h5>{{ supporter.bio }}</h5>
+</div>
+
+<div class="">
+  <h5>Phone: {{ supporter.phone }}</h5>
+</div>
+
+</div>
 
 {% endblock %}

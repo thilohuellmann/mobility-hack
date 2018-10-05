@@ -2,8 +2,37 @@
 
 {% block content %}
 
-<h2>Headline</h2>
+<div class="center">
+  <h2>Profile</h2>
+</div>
 
-<button class="btn">Test</button>
+<div class="center">
+  <i class="large material-icons">account_circle</i>
+</div>
+
+<div class="center">
+  <h4>{{ senior.first_name }} {{ senior.last_name }}</h4>
+</div>
+
+<div class="container">
+
+<div class="">
+  <h5>Gender: {% if senior.gender == 'f' %}Female{% elif senior.gender == 'm' %}Male{% elif senior.gender == 'd' %}Diverse{% endif %}</h5>
+</div>
+
+<div class="">
+  <h5>Birthday: {{ senior.birth_date }}</h5>
+</div>
+
+<div class="">
+  <h5>About yourself:</h5>
+  <h5>{{ senior.bio }}</h5>
+</div>
+
+<div class="">
+  <h5>Phone: {{ senior.phone }}</h5>
+</div>
+
+</div>
 
 {% endblock %}

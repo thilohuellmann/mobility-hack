@@ -30,12 +30,35 @@ def index(request):
 @login_required
 # @is_senior <-- implement decorator
 def create_profile_senior(request):
-    return render(request, 'mobility/create_profile_senior.html', context={})
+    form = forms.SeniorProfileForm()
+    user_id = request.user.id
+
+    if request.method == 'POST':
+        form = request.POST
+        Senior.objects.create(
+            user_id = request.user.id,
+            first_name = form['first_name'],
+            last_name = form['last_name'],
+            profile_image = form['profile_image'],
+            gender = form['gender'],
+            birth_date = form['birth_date'],
+            lat = form['home_lat'],
+            lng = form['home_lng'],
+            bio = form['bio'],
+            phone = form['phone'],
+        )
+        return HttpResponseRedirect('/senior/profile/success')
+    return render(request, 'mobility/create_profile_senior.html', context={'form': form, 'user_id': user_id})
 
 @login_required
 # @is_senior
 def profile_senior(request):
-    return render(request, 'mobility/profile_senior.html', context={})
+
+    user_id = request.user.id
+
+    senior = Senior.objects.get(user_id=user_id)
+
+    return render(request, 'mobility/profile_senior.html', context={'senior': senior})
 
 @login_required
 # @is_senior
@@ -117,6 +140,11 @@ def trip_create_5_senior(request):
 def trip_creation_confirmation_senior(request):
     return render(request, 'mobility/trip_creation_confirmation_senior.html', context={})
 
+@login_required
+# @is_supporter
+def profile_senior_success(request):
+    return render(request, 'mobility/profile_senior_success.html', context={})
+
 # # # # # # # # # # # # # # #
 #                           #
 #  SUPPORTERS' VIEWS BEGIN  #
@@ -150,7 +178,11 @@ def create_profile_supporter(request):
 @login_required
 # @is_supporter
 def profile_supporter(request):
-    return render(request, 'mobility/profile_supporter.html', context={})
+
+    user_id = request.user.id
+
+    supporter = Supporter.objects.get(user_id=user_id)
+    return render(request, 'mobility/profile_supporter.html', context={'supporter': supporter})
 
 @login_required
 # @is_supporter
