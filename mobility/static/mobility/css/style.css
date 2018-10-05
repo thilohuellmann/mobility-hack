@@ -244,16 +244,11 @@ div.collapsible-body {
   text-decoration: underline;
 }
 
-<<<<<<< HEAD
 
 /* CARDS CSS */
 
-.avatar {
-  width: 50px;
-  border-radius: 50%;
+.avatar-card {
 
-  display:block;
-  margin:auto;
 
 }
 .card {
@@ -293,6 +288,14 @@ div.collapsible-body {
   font-weight: lighter;
   opacity: 0.6;
   margin-top: 5px;
+}
+
+.card-name img{
+  width: 50px;
+  border-radius: 50%;
+  display:block;
+  margin:auto;
+
 }
 .card-body {
   font-size: 13px;
