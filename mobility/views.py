@@ -40,7 +40,22 @@ def profile_senior(request):
 @login_required
 # @is_senior
 def my_trips_senior(request):
-    return render(request, 'mobility/my_trips_senior.html', context={})
+
+    user_id = request.user.id
+    senior_id = models.Senior.objects.get(user_id=request.user.id).id
+    pending_status_applied = utils.get_trip_list_by_status_senior("pending", senior_id)
+    confirmed_status_applied = utils.get_trip_list_by_status_senior("confirmed", senior_id)
+    done_status_applied = utils.get_trip_list_by_status_senior("done", senior_id)
+    expired_status_applied = utils.get_trip_list_by_status_senior("expired", senior_id)
+
+    context = {
+        "pending": pending_status_applied,
+        "confirmed": confirmed_status_applied,
+        "done": done_status_applied,
+        "expired": expired_status_applied
+    }
+
+    return render(request, 'mobility/my_trips_senior.html', context=context)
 
 @login_required
 # @is_senior
