@@ -32,7 +32,7 @@
   <hr>
   <div class="lower-card">
     <div class="card-status">
-      <p class="">Avg. Rating: 4.9</p>
+      <p class="">Avg. Rating: {{ trip.average_rating }}</p>
     </div>
     <div class="card-status">
       <p class="">Distance: 2.5km</p>
@@ -87,9 +87,7 @@
   </div>
 </div>
 
-
 {% endfor %}
-
 
 <h2>Expired</h2>
 {% for trip in rejected %}

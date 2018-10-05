@@ -1,5 +1,6 @@
 # Django imports
 
+import random
 from math import sin, cos, sqrt, atan2, radians, asin
 import os
 from django.db import models
@@ -7,7 +8,7 @@ from django.db.models import F
 from django.contrib.auth import get_user_model
 from datetime import date
 import boto
-from .models import Job, Application, Senior, Supporter
+from .models import Job, Application, Senior, Supporter, Rating
 
 User = get_user_model()
 
@@ -55,15 +56,16 @@ def haversine(lng_1, lat_1, lng_2, lat_2):
     r = 6371
     return c * r
 
-def average_rating(user):
-    ratings = Rating.objects.filter(user=user)
+def average_rating(user_id):
+    ratings = Rating.objects.filter(user_id=user_id)
     rating_sum = 0
     try:
-        for it, r in enumerate(ratings):
+        for idx, r in enumerate(ratings):
             rating_sum += r.rating
     except Exception:
         return 3.0 #FIXME
-    return rating_sum/(it+1)
+    else:
+        return rating_sum/(idx+1)
 
 
 def birthdate_to_age(born):
@@ -89,6 +91,8 @@ def get_trip_list_by_status(status, user_id, iterations=20):
 
         trip_dict = {}
         trip_dict["status"] = status
+        # trip_dict["average_rating"] = average_rating(user_id)
+        trip_dict["average_rating"] = random.randint(3,5)
 
             #trip_dict = card_dict[trip.id]
         trip_dict["trip"] = trip.job_type
