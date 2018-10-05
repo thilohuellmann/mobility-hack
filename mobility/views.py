@@ -84,8 +84,16 @@ def my_trips_senior(request):
 
 @login_required
 # @is_senior
-def trip_details_senior(request):
-    return render(request, 'mobility/trip_details_senior.html', context={})
+def trip_details_senior(request, id):
+
+    trip = models.Job.objects.filter(id=id).values('job_type', 'start_loc', 'end_loc', 'start_time_type', 'date', 'time', 'time_slot')[0]
+
+    applicants = []
+    supporter_ids = models.Application.objects.filter(job_id=id).values('supporter_id')
+    for supporter_id in supporter_ids:
+        applicants.append(models.Supporter.objects.filter(id=supporter_id)[0])
+
+    return render(request, 'mobility/trip_details_senior.html', context={'trip': trip, 'applicants': applicants})
 
 @login_required
 # @is_senior
@@ -423,7 +431,24 @@ def my_trips_supporter(request):
 @login_required
 # @is_supporter
 def trip_details_supporter(request, id):
-    return render(request, 'mobility/trip_details_supporter.html', context={})
+
+    user_id = request.user.id
+    supporter_id = models.Supporter.objects.get(user_id=request.user.id).id
+    senior_id = models.Job.objects.get(id=id).senior_id
+
+    trip = models.Job.objects.filter(id=id).values('job_type', 'start_loc', 'end_loc', 'start_time_type', 'date', 'time', 'time_slot')[0]
+
+    # changes status from draft to pending
+    if request.method == 'POST':
+        models.Application.objects.create(
+                    job_id = id
+                    supporter_id = supporter_id
+                    senior_id = senior_id
+        )
+
+        return HttpResponseRedirect('supporter/trip/' + str(id) + '/application_confirmation')
+
+    return render(request, 'mobility/trip_details_supporter.html', context={'trip': trip})
 
 @login_required
 # @is_supporter
