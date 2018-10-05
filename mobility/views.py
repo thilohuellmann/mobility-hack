@@ -94,6 +94,7 @@ def trip_create_1_senior(request):
     user_id = request.user.id
     senior_id = models.Senior.objects.filter(user_id=user_id)[0].id
 
+
     if request.method == 'POST':
         form = request.POST
 
@@ -300,6 +301,7 @@ def discover_trips_supporter(request):
 
             #trip_dict = card_dict[trip.id]
         trip_dict["trip"] = trip.job_type
+        trip_dict["trip_id"] = trip.id
         if trip.date == None:
             pass
         else:
@@ -318,10 +320,10 @@ def discover_trips_supporter(request):
             # trip_dict["name"] = user.first_name
             # trip_dict["image_url"] = user.profile_image
 
-            context = {
-            "trips": card_dict
-            }
-            pass
+            # context = {
+            #   "trips": card_dict
+            # }
+            # pass
 
         trip_dict["senior_id"] = trip.senior_id
 
@@ -329,7 +331,7 @@ def discover_trips_supporter(request):
             senior = models.Senior.objects.filter(id=trip.senior_id)[0]
             trip_dict["name"] = "{0} {1}".format(senior.first_name, senior.last_name)
             trip_dict["image_url"] = senior.profile_image
-            trip_dict["age"] = utils.get_age(senior.birth_date)
+            trip_dict["age"] = utils.birthdate_to_age(senior.birth_date)
         except IndexError:
             continue
 
@@ -342,8 +344,8 @@ def discover_trips_supporter(request):
     }
 
         # DATE FUNCTION für importer fehlt!!!!
-        # year = choice(list(range(1985, 2000)))
-        # return datetime.date(year, 3, 13)
+
+    N_users = 10
 
     def generate_bio():
         return choice(["Prone to fits of apathy. Creator. Beer fanatic. Lifelong tv lover. Certified food expert. Extreme zombie enthusiast.",
@@ -395,8 +397,10 @@ def discover_trips_supporter(request):
                                       # time=datetime.time(randint(12, 22), 00, 00),
                                       time_slot=choice(['morning', 'noon', 'afternoon', 'evening']),
                                       )
+      year = choice(list(range(1985, 2000)))
+      return datetime.date(year, 3, 13)
 
-    generate_seed()
+    # generate_seed()
 
 
 

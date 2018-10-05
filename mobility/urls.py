@@ -28,8 +28,9 @@ urlpatterns = [
     path('supporter/create_profile/', views.create_profile_supporter, name='create_profile_supporter'),
     path('supporter/profile/', views.profile_supporter, name='profile_supporter'),
     path('supporter/profile/success', views.profile_supporter_success, name='profile_supporter_success'),
+
     path('supporter/discover/', views.discover_trips_supporter, name='discover_trips_supporter'),
+    path('supporter/trip/<int:id>/', views.trip_details_supporter, name='trip_details_supporter'),
     path('supporter/my_trips/', views.my_trips_supporter, name='my_trips_supporter'),
-    path('supporter/trip/<int:id>/', views.trip_details_supporter, name='trip_details_supporter'), # ??? TODO
     path('supporter/trip/<int:id>/application_confirmation', views.trip_application_confirmation_supporter, name='trip_application_confirmation_supporter'), # HttpResponseRedirect
 ]
