@@ -50,64 +50,93 @@ def trip_details_senior(request):
 def trip_create_1_senior(request):
 
     user_id = request.user.id
-    senior_id = 123 # models.Senior.objects.filter(user_id=user_id)[0]
+    senior_id = 123 # models.Senior.objects.filter(user_id=user_id)[0] TODO
 
     if request.method == 'POST':
         form = request.POST
 
         job_type = form['job_type']
 
-        models.Job.objects.create(
+        obj = models.Job.objects.create(
                     senior_id = senior_id,
                     rated = False,
                     status = 'draft',
                     job_type = job_type,
         )
 
-        return HttpResponseRedirect('/senior/trip/create/step_2')
+        id = obj.id
+
+        return HttpResponseRedirect('/senior/trip/create/step_2/' + str(id) )
 
     return render(request, 'mobility/trip_create_1_senior.html', context={})
 
 @login_required
 # @is_senior
-def trip_create_2_senior(request):
-    #user_id = request.user.id
-    #senior_id = 123 # models.Senior.objects.filter(user_id=user_id)[0]
-
-    # get latest created job
-    #job_id = models.Job.objects.filter(senior_id=123).order_by('-created_at')[0]
-
-    start = 'no start'
+def trip_create_2_senior(request, id):
 
     if request.method == 'POST':
-        form = request.POST
-        start = form['start_lat'] + ',' + form['start_lng'] + ',' + form['end_lat'] + ',' + form['end_lng']
 
-    return render(request, 'mobility/trip_create_2_senior.html', context={'start': start})
+        form = request.POST
+        start_lat = form['start_lat']
+        start_lng = form['start_lng']
+        end_lat = form['end_lat']
+        end_lng = form['end_lng']
+
+        # update latest job object
+        models.Job.objects.filter(id=id).update(
+                                start_lat = start_lat,
+                                start_lng = start_lng,
+                                end_lat = end_lat,
+                                end_lng = end_lng,
+        )
+
+        return HttpResponseRedirect('/senior/trip/create/step_3/' + str(id) )
+
+    return render(request, 'mobility/trip_create_2_senior.html', context={})
 
 @login_required
 # @is_senior
-def trip_create_3_senior(request):
+def trip_create_3_senior(request, id):
+
+    if request.method == 'POST':
+        form = request.POST
+
+        start_time_type = form['start_time_type']
+
+        # update job object
+        models.Job.objects.filter(id=id).update(start_time_type = start_time_type)
+
+        if start_time_type == 'flexible':
+            return HttpResponseRedirect('/senior/trip/create/step_4_2_1/' + str(id) )
+        else: # == fixed
+            return HttpResponseRedirect('/senior/trip/create/step_4_1/' + str(id) )
+
     return render(request, 'mobility/trip_create_3_senior.html', context={})
 
 @login_required
 # @is_senior
-def trip_create_4_1_senior(request):
+def trip_create_4_1_senior(request, id):
+    pass
+
     return render(request, 'mobility/trip_create_4_1_senior.html', context={})
 
 @login_required
 # @is_senior
-def trip_create_4_2_1_senior(request):
+def trip_create_4_2_1_senior(request, id):
+    pass
+
     return render(request, 'mobility/trip_create_4_2_1_senior.html', context={})
 
 @login_required
 # @is_senior
-def trip_create_4_2_2_senior(request):
+def trip_create_4_2_2_senior(request, id):
+    pass
+
     return render(request, 'mobility/trip_create_4_2_2_senior.html', context={})
 
 @login_required
 # @is_senior
-def trip_create_5_senior(request):
+def trip_create_5_senior(request, id):
     return render(request, 'mobility/trip_create_5_senior.html', context={})
 
 @login_required
@@ -224,12 +253,12 @@ def my_trips_supporter(request):
 
 @login_required
 # @is_supporter
-def trip_details_supporter(request):
+def trip_details_supporter(request, id):
     return render(request, 'mobility/trip_details_supporter.html', context={})
 
 @login_required
 # @is_supporter
-def trip_application_confirmation_supporter(request):
+def trip_application_confirmation_supporter(request, id):
     return render(request, 'mobility/trip_application_confirmation_supporter.html', context={})
 
 @login_required

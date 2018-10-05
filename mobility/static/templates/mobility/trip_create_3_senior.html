@@ -2,8 +2,34 @@
 
 {% block content %}
 
-<h2>Headline</h2>
+<h2 class="header">Flexibility</h2>
 
-<button class="btn">Test</button>
+<form method="POST">
+{% csrf_token %}
+  <input type="hidden" name="start_time_type" value="flexible">
+
+  <button type="submit" name="">
+    <div class="card">
+      <div id="flexible" class="card-image">
+        <img src="https://images.pexels.com/photos/13861/IMG_3496bfree.jpg">
+        <span class="card-title">Flexible trip <a class="btn-floating btn-large waves-effect waves-light red"><i class="material-icons">arrow_forward</i></a></span>
+      </div>
+    </div>
+  </button>
+</form>
+
+<form method="POST">
+{% csrf_token %}
+  <input type="hidden" name="start_time_type" value="fixed">
+
+  <button type="submit" name="">
+    <div class="card">
+      <div id="fixed" class="card-image">
+        <img src="https://images.pexels.com/photos/13861/IMG_3496bfree.jpg">
+        <span class="card-title">Fixed time <a class="btn-floating btn-large waves-effect waves-light red"><i class="material-icons">arrow_forward</i></a></span>
+      </div>
+    </div>
+  </button>
+</form>
 
 {% endblock %}

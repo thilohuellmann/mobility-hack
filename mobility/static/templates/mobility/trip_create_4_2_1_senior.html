@@ -2,8 +2,14 @@
 
 {% block content %}
 
-<h2>Headline</h2>
+<h2>Pick a time</h2>
 
-<button class="btn">Test</button>
+<form method="POST">
+{% csrf_token %}
+
+  <input type="text" class="datepicker">
+  <button type="submit" class="btn" name="">confirm</button>
+
+</form>
 
 {% endblock %}
