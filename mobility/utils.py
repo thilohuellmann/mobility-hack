@@ -93,7 +93,6 @@ def get_trip_list_by_status(status, user_id, iterations=20):
         trip_dict["status"] = status
         # trip_dict["average_rating"] = average_rating(user_id)
         trip_dict["average_rating"] = random.randint(3,5)
-
             #trip_dict = card_dict[trip.id]
         trip_dict["trip"] = trip.job_type
         if trip.date == None:

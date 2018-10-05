@@ -2,24 +2,82 @@
 
 {% block content %}
 
-<h2>Trip details</h2>
+  <h3>Trip</h3>
+
+  <div class="card">
+        <div class="upper-card">
+          <div class="card-name">
+            <img class="avatar-card" src="https://randomuser.me/api/portraits/men/62.jpg">
+            <h3>{{ trip.name }} ({{ trip.age }})</h3>
+            <p></p>
+          </div>
+          <div class="card-body">
+            <p><strong>{{ trip.job_type }} </strong></p>
+            {% if trip.start_time_type == 'flexible' %}
+              <p>Date: {{ trip.date }}</p>
+              <p>Time slot: {{ trip.time_slot }}</p>
+            {% else %}
+              <p>Date: {{ trip.date }}</p>
+              <p>Time: {{ trip.time }}</p>
+            {% endif %}
+          </div>
+          <div class="price">
+            <p> {{ trip.start_loc }}</p>
+            <p> {{ trip.end_loc }}</p>
+          </div>
+        </div>
+        <hr>
+        <div class="lower-card">
+          <div class="card-status">
+            <p class="">Avg. Rating: 4.9</p>
+          </div>
+          <div class="card-status">
+            <p class="">Distance: 2.5km</p>
+          </div>
+          <div>
+            <p class="card-status">Applications: 3</p>
+          </div>
+        </div>
+  </div>
 
 <!-- job_type', 'start_loc', 'end_loc', 'start_time_type', 'date', 'time', 'time_slot -->
 
-<p>Type: {{ trip.job_type }}</p>
-<p>Start: {{ trip.start_loc }}</p>
-<p>Destination: {{ trip.end_loc }}</p>
+  <h3> Applicants</h3>
 
-{% if trip.start_time_type == 'flexible' %}
-  <p>Date: {{ trip.date }}</p>
-  <p>Time slot: {{ trip.time_slot }}</p>
-{% else %}
-  <p>Date: {{ trip.date }}</p>
-  <p>Time: {{ trip.time }}</p>
-{% endif %}
+  {% for applicant in applicants %}
+    <div class="card">
+          <div class="upper-card">
+            <div class="card-name">
+              <img class="avatar-card" src="https://randomuser.me/api/portraits/men/62.jpg">
+              <h3> {{ applicant.first_name }} ({{ applicant.age }})</h3>
+              <p></p>
+            </div>
+            <div class="card-body">
+              <p><strong>{{ applicant.bio }} </strong></p>
+              {% if trip.start_time_type == 'flexible' %}
+                <p>Date: {{ trip.date }}</p>
+                <p>Time slot: {{ trip.time_slot }}</p>
+              {% else %}
+                <p>Date: {{ trip.date }}</p>
+                <p>Time: {{ trip.time }}</p>
+              {% endif %}
+            </div>
+            <div class="price">
+              <p> {{ trip.reward }}</p>
+            </div>
+          </div>
+          <hr>
+          <div class="lower-card">
+            <div class="card-status">
+              <p class="">Avg. Rating: 4.9</p>
+            </div>
+            <div class="card-status">
+              <p class="">Distance: 2.5km</p>
+            </div>
+          </div>
+    </div>
 
-{% for applicant in applicants %}
-  {{ applicant.first_name }}
-{% endfor %}
+  {% endfor %}
 
 {% endblock %}
+
