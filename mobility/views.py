@@ -89,8 +89,9 @@ def trip_details_senior(request, id):
     trip = models.Job.objects.filter(id=id).values('job_type', 'start_loc', 'end_loc', 'start_time_type', 'date', 'time', 'time_slot')[0]
 
     applicants = []
-    supporter_ids = models.Application.objects.filter(job_id=id).values('supporter_id')
-    for supporter_id in supporter_ids:
+    query_set = models.Application.objects.filter(job_id=id).values('supporter_id')
+    for query in query_set:
+        supporter_id = query['supporter_id']
         applicants.append(models.Supporter.objects.filter(id=supporter_id)[0])
 
     return render(request, 'mobility/trip_details_senior.html', context={'trip': trip, 'applicants': applicants})
@@ -445,12 +446,12 @@ def trip_details_supporter(request, id):
     # changes status from draft to pending
     if request.method == 'POST':
         models.Application.objects.create(
-                    job_id = id
-                    supporter_id = supporter_id
-                    senior_id = senior_id
+                    job_id = id,
+                    supporter_id = supporter_id,
+                    senior_id = senior_id,
         )
 
-        return HttpResponseRedirect('supporter/trip/' + str(id) + '/application_confirmation')
+        return HttpResponseRedirect('/supporter/trip/' + str(id) + '/application_confirmation')
 
     return render(request, 'mobility/trip_details_supporter.html', context={'trip': trip})
 
