@@ -19,6 +19,14 @@ boto_key = os.environ.get("BOTO_PUB_KEY")
 boto_s_key = os.environ.get("BOTO_SECRET_KEY")
 
 def index(request):
+
+    user_id = request.user.id
+    try:
+        senior = models.Senior.objects.filter(user_id=user_id)[0]
+        user_type = 'senior'
+    except:
+        user_type = 'supporter'
+
     return render(request, 'mobility/index.html')
 
 # # # # # # # # # # # # # # #
@@ -269,7 +277,7 @@ def create_profile_supporter(request):
 
     if request.method == 'POST':
         form = request.POST
-        Supporter.objects.create(
+        models.Supporter.objects.create(
             user_id = request.user.id,
             first_name = form['first_name'],
             last_name = form['last_name'],
@@ -291,7 +299,7 @@ def profile_supporter(request):
 
     user_id = request.user.id
 
-    supporter = Supporter.objects.get(user_id=user_id)
+    supporter = models.Supporter.objects.get(user_id=user_id)
     return render(request, 'mobility/profile_supporter.html', context={'supporter': supporter})
 
 @login_required
@@ -378,13 +386,13 @@ def discover_trips_supporter(request):
 
     def generate_seed():
       for _ in range(N_users):
-          user = User.objects.create(first_name=f.first_name(),
+          user = models.User.objects.create(first_name=f.first_name(),
                                      last_name=f.last_name(),
                                      email=f.email())
 
           profile = 0
           sen_lat, sen_lng = generate_location()
-          senior = Senior.objects.create(user_id=user.id,
+          senior = models.Senior.objects.create(user_id=user.id,
                                          first_name=user.first_name,
                                          last_name=user.last_name,
                                          profile_image='https://source.unsplash.com/user/erondu',
@@ -395,7 +403,7 @@ def discover_trips_supporter(request):
                                          phone=generate_phone())
           for __ in range(3):
               job_lat, job_lng = generate_location()
-              job = Job.objects.create(senior_id=senior.user_id,
+              job = models.Job.objects.create(senior_id=senior.user_id,
                                        status=choice(['draft', 'pending',
                                                       'confirmed', 'done',
                                                       'expired']),
