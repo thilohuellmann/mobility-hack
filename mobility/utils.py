@@ -74,6 +74,7 @@ def birthdate_to_age(born):
 
 def get_trip_list_by_status(status, user_id, iterations=20):
 
+
     applications = Application.objects.filter(supporter_id=user_id).filter(application_status=status)
 
     i = 0
@@ -109,7 +110,7 @@ def get_trip_list_by_status(status, user_id, iterations=20):
             senior = Senior.objects.filter(id=trip.senior_id)[0]
             trip_dict["name"] = "{0} {1}".format(senior.first_name, senior.last_name)
             trip_dict["image_url"] = senior.profile_image
-            trip_dict["age"] = get_age(senior.birth_date)
+            trip_dict["age"] = birthdate_to_age(senior.birth_date)
         except IndexError:
             pass
 
