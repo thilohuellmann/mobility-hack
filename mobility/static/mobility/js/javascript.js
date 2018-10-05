@@ -33,4 +33,11 @@ function fillIn() {
     $('#end_lng').val(lng);
   }
 
+  if (this.inputId == 'home_location') {
+    $('#home_lat').val(lat);
+    $('#home_lng').val(lng);
+  }
+
+
+
 }

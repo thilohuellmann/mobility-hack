@@ -23,5 +23,5 @@ class SupporterProfileForm(forms.Form):
     bio = forms.CharField(widget=forms.Textarea(attrs={'placeholder': 'About yourself'}))
     phone = forms.CharField(required=True, widget=forms.TextInput(attrs={'placeholder': 'Phone number'}))
     radius = forms.ChoiceField(required=True, choices=RADII, widget=forms.RadioSelect(attrs={'display': 'inline'}))
-    lat = forms.FloatField(required=True, widget=forms.NumberInput(attrs={'type': 'hidden','value': 1}))
-    lng = forms.FloatField(required=True, widget=forms.NumberInput(attrs={'type': 'hidden','value': 1}))
+    #lat = forms.FloatField(required=True)
+    #lng = forms.FloatField(required=True, widget=forms.NumberInput(attrs={'type': 'hidden','value': 1}))

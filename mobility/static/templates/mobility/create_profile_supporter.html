@@ -35,6 +35,11 @@
       {% endfor %}
     </p>
 
+    <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=places&key=AIzaSyA5Sn6p8fW4HUxsSPQsrrBd8iF2QWZM1hI"></script>
+
+    <input id="home_location" name="home_location" class="query" type="text" placeholder="Adress" required/>
+    <input id="home_lat" type="hidden" name="home_lat" value="">
+    <input id="home_lng" type="hidden" name="home_lng" value="">
 
     <div class="input-field">
       {{ form.birth_date }}
@@ -57,14 +62,6 @@
             </label>
         {% endfor %}
       </p>
-
-      <div class="input-field">
-        {{ form.lat }}
-      </div>
-
-      <div class="input-field">
-        {{ form.lng }}
-      </div>
 
       <button type="submit" class="btn" name="button">Save</button>
 </form>

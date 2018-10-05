@@ -131,7 +131,6 @@ def create_profile_supporter(request):
 
     if request.method == 'POST':
         form = request.POST
-        file = request.FILES['profile_image']
         Supporter.objects.create(
             user_id = request.user.id,
             first_name = form['first_name'],
@@ -139,13 +138,12 @@ def create_profile_supporter(request):
             profile_image = form['profile_image'],
             gender = form['gender'],
             birth_date = form['birth_date'],
-            lat = form['lat'],
-            lng = form['lng'],
+            lat = form['home_lat'],
+            lng = form['home_lng'],
             bio = form['bio'],
             phone = form['phone'],
             radius = form['radius'],
         )
-        utils.s3_upload(file, request.user.id)
         return HttpResponseRedirect('/supporter/profile/success')
     return render(request, 'mobility/create_profile_supporter.html', context={'form': form, 'user_id': user_id})
 
