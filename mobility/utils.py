@@ -89,6 +89,7 @@ def get_trip_list_by_status(status, user_id, iterations=20):
 
         trip_dict = {}
         trip_dict["status"] = status
+        trip_dict["trip_id"] = trip.id
 
             #trip_dict = card_dict[trip.id]
         trip_dict["trip"] = trip.job_type
@@ -138,6 +139,7 @@ def get_trip_list_by_status_senior(status, user_id, iterations=20):
 
         trip_dict = {}
         trip_dict["status"] = status
+        trip_dict["trip_id"] = trip.id
 
             #trip_dict = card_dict[trip.id]
         trip_dict["trip"] = trip.job_type

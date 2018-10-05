@@ -6,6 +6,7 @@
 
 {% for trip in applied %}
 
+<a href='/supporter/trip/{{ trip.trip_id }}/'>
 <div class="card">
   <div class="upper-card">
     <div class="card-name">
@@ -42,7 +43,7 @@
     </div>
   </div>
 </div>
-
+</a>
 
 {% endfor %}
 
@@ -50,6 +51,7 @@
 
 {% for trip in confirmed %}
 
+<a href='/supporter/trip/{{ trip.trip_id }}/'>
 <div class="card">
   <div class="upper-card">
     <div class="card-name">
@@ -86,7 +88,7 @@
     </div>
   </div>
 </div>
-
+</a>
 
 {% endfor %}
 
@@ -94,6 +96,7 @@
 <h2>Expired</h2>
 {% for trip in rejected %}
 
+<a href='/supporter/trip/{{ trip.trip_id }}/'>
 <div class="card">
   <div class="upper-card">
     <div class="card-name">
@@ -130,6 +133,7 @@
     </div>
   </div>
 </div>
+</a>
 
 {% endfor %}
 

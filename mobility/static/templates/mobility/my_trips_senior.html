@@ -6,6 +6,7 @@
 
 {% for trip in pending %}
 
+<a href='/senior/trip/{{ trip.trip_id }}/'>
 <div class="card">
   <div class="upper-card">
     <div class="card-name">
@@ -43,6 +44,7 @@
     </div>
   </div>
 </div>
+</a>
 
 {% endfor %}
 
