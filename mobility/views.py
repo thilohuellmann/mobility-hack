@@ -115,28 +115,62 @@ def trip_create_3_senior(request, id):
 
 @login_required
 # @is_senior
-def trip_create_4_1_senior(request, id):
-    pass
+def trip_create_4_1_senior(request, id): # fixed
+    if request.method == 'POST':
+        form = request.POST
+
+        date = form['date']
+
+        dt_obj = datetime.datetime.strptime(date, '%b %d, %Y')
+        django_date_format = dt_obj.strftime('%Y-%m-%d')
+
+        # update job object
+        models.Job.objects.filter(id=id).update(date=django_date_format)
+
+        time = form['time']
+
+        # update job object
+        models.Job.objects.filter(id=id).update(time=time)
+
+        return HttpResponseRedirect('/senior/trip/create/step_5/' + str(id) )
 
     return render(request, 'mobility/trip_create_4_1_senior.html', context={})
 
 @login_required
 # @is_senior
-def trip_create_4_2_1_senior(request, id):
-    pass
+def trip_create_4_2_1_senior(request, id): # flexible
+    if request.method == 'POST':
+        form = request.POST
+
+        date = form['date']
+
+        dt_obj = datetime.datetime.strptime(date, '%b %d, %Y')
+        django_date_format = dt_obj.strftime('%Y-%m-%d')
+
+        return HttpResponseRedirect('/senior/trip/create/step_4_2_2/' + str(id) )
+
 
     return render(request, 'mobility/trip_create_4_2_1_senior.html', context={})
 
 @login_required
 # @is_senior
 def trip_create_4_2_2_senior(request, id):
-    pass
+
+    if request.method == 'POST':
+        form = request.POST
+
+        return HttpResponseRedirect('/senior/trip/create/step_5/' + str(id) )
 
     return render(request, 'mobility/trip_create_4_2_2_senior.html', context={})
 
 @login_required
 # @is_senior
 def trip_create_5_senior(request, id):
+
+    # show summary
+    # submit trip button
+    # changes status from draft to pending
+
     return render(request, 'mobility/trip_create_5_senior.html', context={})
 
 @login_required
@@ -229,7 +263,7 @@ def discover_trips_supporter(request):
                                       start_lng=senior.lng,
                                       end_lat=job_lat,
                                       end_lng=job_lng,
-                                      start_time_type=choice(['fixed', 'flexibel']),
+                                      start_time_type=choice(['fixed', 'flexible']),
                                       date=datetime.date(2018, 10, choice([5, 6, 7])),
                                       # time=datetime.time(randint(12, 22), 00, 00),
                                       time_slot=choice(['morning', 'noon', 'afternoon', 'evening']),

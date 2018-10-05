@@ -2,12 +2,13 @@
 
 {% block content %}
 
-<h2>Pick a time</h2>
+<h2>Pick a date</h2>
 
 <form method="POST">
 {% csrf_token %}
 
-  <input type="text" class="datepicker">
+  <input name="date" type="text" class="datepicker">
+
   <button type="submit" class="btn" name="">confirm</button>
 
 </form>
