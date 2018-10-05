@@ -2,8 +2,25 @@
 
 {% block content %}
 
-<h2>Headline</h2>
+<h2>From -> To</h2>
 
-<button class="btn">Test</button>
+<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=places"></script>
+
+<form method="POST">
+{% csrf_token %}
+
+  <input id="start_location" name="start_location" class="query" type="text" required/>
+  <input id="start_lat" type="hidden" name="start_lat" value="">
+  <input id="start_lng" type="hidden" name="start_lng" value="">
+
+  <input id="end_location" name="end_location" class="query" type="text" required/>
+  <input id="end_lat" type="hidden" name="end_lat" value="">
+  <input id="end_lng" type="hidden" name="end_lng" value="">
+
+  <button class="btn" type="submit" name="">next <i class="material-icons">arrow_forward</i></button>
+
+</form>
+
+<span>{{ start }}</span>
 
 {% endblock %}
