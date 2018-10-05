@@ -11,6 +11,8 @@ import datetime
 from mobility import forms
 from mobility import utils
 from .forms import SupporterProfileForm
+from .models import Supporter, Senior
+from mobility import models
 import os
 import itertools
 

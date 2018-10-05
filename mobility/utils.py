@@ -58,13 +58,15 @@ def haversine(lng_1, lat_1, lng_2, lat_2):
 
 def average_rating(user_id):
     ratings = Rating.objects.filter(user_id=user_id)
-    rating_sum = 0
-    try:
+
+    if not ratings:
+        return 3.1
+    elif len(ratings) == 0:
+        return 3.1
+    else:
+        rating_sum = 0
         for idx, r in enumerate(ratings):
             rating_sum += r.rating
-    except Exception:
-        return 3.0 #FIXME
-    else:
         return rating_sum/(idx+1)
 
 
