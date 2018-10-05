@@ -214,9 +214,17 @@ def discover_trips_supporter(request):
         if trip.time != None:
             trip_dict["time"] = trip.time
         else:
-<<<<<<< HEAD
             trip_dict["time_slot"] = trip.time_slot
-=======
+            trip_dict["senior_id"] = trip.senior_id
+
+            senior = models.Senior.objects.filter(id=trip.senior_id)[0]
+
+            # trip_dict["name"] = user.first_name
+            # trip_dict["image_url"] = user.profile_image
+
+            context = {
+            "trips": card_dict
+            }
             year = choice(list(range(1985, 2000)))
         return datetime.date(year, 3, 13)
 
@@ -272,18 +280,7 @@ def discover_trips_supporter(request):
                                       )
 
     generate_seed()
->>>>>>> thilo
 
-        trip_dict["senior_id"] = trip.senior_id
-
-        senior = models.Senior.objects.filter(id=trip.senior_id)[0]
-
-        # trip_dict["name"] = user.first_name
-        # trip_dict["image_url"] = user.profile_image
-
-    context = {
-        "trips": card_dict
-    }
 
     return render(request, 'mobility/discover_trips_supporter.html', context=context)
 
