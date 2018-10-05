@@ -20,7 +20,7 @@ def SeniorSignUp(request):
             today = now.date()
             next_month = today + datetime.timedelta(days=+30)
 
-            return redirect('my_trips_senior')
+            return redirect('create_profile_senior')
             # return HttpResponseRedirect('/')
 
     else:
@@ -43,7 +43,7 @@ def SupporterSignUp(request):
             today = now.date()
             next_month = today + datetime.timedelta(days=+30)
 
-            return redirect('my_trips_supporter')
+            return redirect('create_profile_supporter')
             # return HttpResponseRedirect('/')
 
     else:
