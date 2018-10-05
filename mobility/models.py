@@ -28,8 +28,11 @@ class Supporter(models.Model):
     profile_image = models.CharField(max_length=255)
     gender = models.CharField(choices=GENDERS, max_length=255)
     birth_date = models.DateField()
+
     lat = models.FloatField()
     lng = models.FloatField()
+    address = models.CharField(max_length=255, default='Vallendar, Deutschland')
+
     bio = models.CharField(max_length=1200)
     phone = models.CharField(max_length=20)
     radius = models.IntegerField(choices=RADII)
